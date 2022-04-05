@@ -42,7 +42,7 @@ public class arrivalTime {
 	 
 		//trip_id,arrival_time,departure_time,stop_id,stop_sequence,stop_headsign,pickup_type,drop_off_type,shape_dist_traveled
 		arrivalTime temp = new arrivalTime(0,0,0,0,0,"","","","");
-		
+		int i = -1;
 		//sc.useDelimiter(","); 
 		while(sc.hasNextLine()) {	
 			String textLine = sc.nextLine();
@@ -51,7 +51,6 @@ public class arrivalTime {
 			temp.trip_id = Integer.parseInt(textArr[0]);
 			temp.arrival_time = textArr[1];
 			temp.departure_time = textArr[2];
-			System.out.println(textArr[1]);
 			temp.stop_id =  Integer.parseInt(textArr[3]);
 			temp.stop_sequence =  Integer.parseInt(textArr[4]);
 			temp.stop_headsign =  textArr[5];	
@@ -60,9 +59,10 @@ public class arrivalTime {
 			if(textArr.length > 8) {
 				temp.shape_dist_traveled =  textArr[8];
 			}
+			i++;
 			arrivalTimeList.add(temp);
+			//System.out.println(arrivalTimeList.get(i).arrival_time);
 		}	
-		sc.close();
 		return arrivalTimeList;
 	}
 	
@@ -105,10 +105,9 @@ public class arrivalTime {
 		try {
 			ArrayList<arrivalTime> list = getArrayListOfArrivalTimes("input/stop_times.txt");
 			Map<String , ArrayList<arrivalTime>> fack = arrivalTimeListToHashmap(list);
-			list = fack.get(" 5:37:05");
-			for(int i = 0; i < list.size(); i++ ) {
-				printArrivalTimeInfo(list.get(i));
-			}
+			for(int i = 0; i < fack.get("29:00:00").size(); i++)
+				printArrivalTimeInfo(fack.get("29:00:00").get(i));
+			
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
