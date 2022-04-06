@@ -92,27 +92,4 @@ public class arrivalTime {
         System.out.println("--  Drop Off Type: " + a.drop_off_type);
         System.out.println("--  Shape Distance Travelled: " + a.shape_dist_traveled);	
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public static void main(String[] args) {
-		try {
-			ArrayList<arrivalTime> list = getArrayListOfArrivalTimes("input/stop_times.txt");
-			Map<String , ArrayList<arrivalTime>> fack = arrivalTimeListToHashmap(list);
-			for(int i = 0; i < fack.get("29:00:00").size(); i++)
-				printArrivalTimeInfo(fack.get("29:00:00").get(i));
-			
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-	}
-
 }

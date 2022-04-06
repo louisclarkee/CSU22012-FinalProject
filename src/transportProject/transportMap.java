@@ -22,6 +22,10 @@ public class transportMap {
 	Map<Integer, Integer> VertextoID;
 	Map<Integer, String> VertextoName;
 	
+	public transportMap() {
+		V = 0;
+		E = 0;
+	}
 
 	//Graph Constructor
 	public transportMap(String transferFilePath, String stopsFilePath, String stopTimesFilePath ) throws FileNotFoundException
