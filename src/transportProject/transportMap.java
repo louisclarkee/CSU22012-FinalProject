@@ -2,13 +2,10 @@ package transportProject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import edu.princeton.cs.algs4.AdjMatrixEdgeWeightedDigraph;
 import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 
@@ -22,12 +19,19 @@ public class transportMap {
 	Map<Integer, Integer> VertextoID;
 	Map<Integer, String> VertextoName;
 	
+	// Empty constructor
 	public transportMap() {
 		V = 0;
 		E = 0;
 	}
 
-	//Graph Constructor
+	 /**
+	 * Constructor for transportMap object.
+	 * Reads input files and stores stops as vertices and routes between stops as edges in an EdgeWeightedDigraph.
+	 * 
+     * @param String, String, String : Which are the filepaths for the input files stops.txt, stop_times.txt and transfers.txt
+     * @return 
+     */ 
 	public transportMap(String transferFilePath, String stopsFilePath, String stopTimesFilePath ) throws FileNotFoundException
 	{
 		V = 0;
@@ -35,22 +39,32 @@ public class transportMap {
 		File transfersFile = new File(transferFilePath);
 		File stopsFile = new File(stopsFilePath);
 		File stopTimesFile = new File(stopTimesFilePath);
+		
+		//Create key-value pairs connecting vertex number to stop id and vertex number to stop name
 		IDtoVertex = new HashMap<Integer, Integer>();
 		VertextoID = new HashMap<Integer, Integer>();
 		VertextoName = new HashMap<Integer, String>();
-
+		
+		//Scanner to read thorugh each text file
 		Scanner sc = new Scanner(stopsFile);
+		
 		sc.nextLine();
+		
+		// String in which each line of the text file can be split up and stored in
 		String[] lineArr = null;
 
 		//reading in vertexes (stops) from stops.txt
 		while(sc.hasNextLine()) {
 			lineArr = sc.nextLine().split(",");
+			//Fill in key maps with stop information from file
 			IDtoVertex.put(Integer.parseInt(lineArr[0]),V);	
 			VertextoID.put(V,Integer.parseInt(lineArr[0]));
 			VertextoName.put(V, lineArr[2]);	
+			//Count of number of vertices and also used as vertex index
 			V++;	
 		}
+		
+		//Initialise graph to which weighted edges will be added
 		graph = new EdgeWeightedDigraph(V);
 		
 		sc.close();
@@ -80,6 +94,7 @@ public class transportMap {
 			lineArr = sc.nextLine().split(",");
 			toStopID =Integer.parseInt(lineArr[3]);
 			currentTripID = Integer.parseInt(lineArr[0]);
+			// Edge should be added only between 2 consecutive stops with the same trip_id
 			if(prevTripID == currentTripID) {
 				VindexFrom = IDtoVertex.get(fromStopID);
 				VindexTo = IDtoVertex.get(toStopID);

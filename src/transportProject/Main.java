@@ -3,14 +3,15 @@ package transportProject;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import edu.princeton.cs.algs4.DijkstraSP;
 import edu.princeton.cs.algs4.DirectedEdge;
 
 public class Main {
-	public static final String lineSeparator = "---------------------------------------------------------------------------------\n"
-			+ "---------------------------------------------------------------------------------";
+	public static final String lineSeparator = "_______________________________________________________________\n"
+			+ "---------------------------------------------------------------\n";
 	public static final String mainTitle = "   ___              _____        __       \n"
 			+ "  / __\\_   _ ___    \\_   \\_ __  / _| ___  \n"
 			+ " /__\\// | | / __|    / /\\/ '_ \\| |_ / _ \\ \n"
@@ -45,12 +46,12 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		boolean runSystem = true;
 		boolean query1RunPrev = false;
-		boolean query2RunPrev = false;
 		boolean query3RunPrev = false;
+		boolean validInput = false;
 
 		//set to user input using scanner
-		String userInputString;
-		int userInputInt;
+		String userInputString = "";	
+		int userInputInt = 0;
 
 		//Initialise transportMap object
 		transportMap map = new transportMap();
@@ -79,9 +80,15 @@ public class Main {
 						map = new transportMap("input/transfers.txt", "input/stops.txt", "input/stop_times.txt");
 						query1RunPrev= true;
 					}
+					while(!validInput) {	
 
-					System.out.print("Please enter an origin stop number: ");
-					userInputInt = scanner.nextInt();
+						System.out.println("Please enter a valid origin stop ID: ");
+						userInputInt = scanner.nextInt();
+						if(userInputInt >0)
+							validInput = true;
+
+					}
+					validInput = false;
 
 					DijkstraSP DSP = new DijkstraSP(map.graph, map.IDtoVertex.get(userInputInt));
 
@@ -106,18 +113,17 @@ public class Main {
 					}
 
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				System.out.println(lineSeparator);
 				break;
 
-
 			case "2":
-				System.out.println("Case 2 selected.\n"+ lineSeparator);
-
-				NameSearch nameSearch = new NameSearch("input/stops.txt");
-
+				System.out.println("Query 2 Loading...\n"+ lineSeparator);
+				NameSearch nameSearch;
+								
+				nameSearch = new NameSearch("input/stops.txt");
+					
 				System.out.print("Please enter the name of the bus stop that you are searching for:");
 				userInputString = scanner.next();
 
@@ -129,8 +135,15 @@ public class Main {
 
 
 			case "3":
-				System.out.println("Case 3 selected.");
-				System.out.println(lineSeparator);
+				System.out.println("Query 3 Loading....\n"+ lineSeparator);
+				HashMap<String, ArrayList<arrivalTime>> arrivalTimeMap = null;
+				if(!query3RunPrev) {
+					arrivalTimeMap = arrivalTime.storeArrivalTimesHashMap("input/stop_times.txt");
+					query3RunPrev = true;
+				}
+				System.out.print("Please enter an arrival time:");
+				userInputString = scanner.next();
+				arrivalTime.printArrivalTimesFromHashMap(arrivalTimeMap, userInputString);
 
 				break;
 
@@ -142,7 +155,7 @@ public class Main {
 				runSystem = false;
 				break;
 			default:
-				System.out.println("Invalid Input: Please type in 1,2,3 or 4 to select a query!");
+				System.out.println("\n*Invalid Input: Please type in 1,2,3 or 4 to select a query!");
 			}
 		}
 		scanner.close();
