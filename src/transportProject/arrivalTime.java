@@ -104,12 +104,14 @@ public class arrivalTime {
 	 * @param  map : HashMap of ArrayLists of arrivalTime objects, userArrivalTime : Time that the user is looking for mathcin times
 	 */ 
 	public static void printArrivalTimesFromHashMap(HashMap<String, ArrayList<arrivalTime>> map, String userArrivalTime) {
+
 		// Get ArrayList of arrivalTimes from hashmap using userArrivaltime String as key
 		ArrayList<arrivalTime> arrivalTimeList = map.get(userArrivalTime);
 		//Sort ArrayList by trip ID
 		arrivalTimeList = mergSortArrivalTime.mergeSort(arrivalTimeList);
 
-		System.out.println("There are " + arrivalTimeList.size() +" trips matching your selected arrival time!");
+		System.out.println(Main.lineSeparator + Main.lineSeparator +
+				"\n** There are " + arrivalTimeList.size() +" trips matching your selected arrival time! **\n");
 		int tripCount = 1;
 
 		// Print all arrivalTime objects in arrivalTimeList
@@ -117,7 +119,7 @@ public class arrivalTime {
 			System.out.println("* Matching Trip: " + tripCount);
 			tripCount++;
 			printArrivalTimeInfo(a);
-		}	
+		}
 	}
 
 
@@ -135,6 +137,6 @@ public class arrivalTime {
 		System.out.println("--  Stop Headsign: " + a.stop_headsign);
 		System.out.println("--  Pickup Type: " + a.pickup_type);
 		System.out.println("--  Drop Off Type: " + a.drop_off_type);
-		System.out.println("--  Shape Distance Travelled: " + a.shape_dist_traveled + "\n" + Main.lineSeparator);	
+		System.out.println("--  Shape Distance Travelled: " + a.shape_dist_traveled + "\n" + Main.lineSeparator2);	
 	}
 }

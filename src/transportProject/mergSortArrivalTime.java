@@ -9,9 +9,11 @@ public class mergSortArrivalTime {
      * @param a: an ArrayList of arrivalTimes
      * @return after the method returns, the ArrayList of arrivalTimes will be sorted by trip ID.
      */
-	public static ArrayList<arrivalTime> mergeSort(ArrayList<arrivalTime> list){       
-        mergeRecursive(0, list.size()-1, list);
-        return list;
+	public static ArrayList<arrivalTime> mergeSort(ArrayList<arrivalTime> list){      
+		if(list != null) {
+			mergeRecursive(0, list.size()-1, list);
+		}
+		return list;
     }
     
     public static void mergeRecursive(int startI,int endI, ArrayList<arrivalTime> list){
